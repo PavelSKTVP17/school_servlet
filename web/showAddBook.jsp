@@ -7,7 +7,7 @@
     </head>
     <body>
         <h1>Создать книгу</h1>
-        <form action="" method="POST">
+        <form action="createBook" method="POST">
             Название<br>
             <input type="text" name="name"><br>
             Автор<br>

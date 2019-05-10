@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
-@WebServlet(name = "WebController", urlPatterns = {"/showAddBook","/createBook","/listBooks",})
+@WebServlet(name = "WebController", urlPatterns = {"/","/showAddBook","/createBook","/listBooks",})
 public class WebController extends HttpServlet {
 @EJB BookFacade bookFacade;
 
@@ -24,6 +24,9 @@ public class WebController extends HttpServlet {
         String path=request.getServletPath();
         switch(path)
         {
+            case "/": 
+                request.getRequestDispatcher("/index.jsp").forward(request, response);
+            break;
             case "/showAddBook": 
                 request.getRequestDispatcher("/showAddBook.jsp").forward(request, response);
             break;
