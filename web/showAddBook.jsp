@@ -16,9 +16,9 @@
             <input type="text" name="publishedYear"><br>
             isbn<br>
             <input type="text" name="isbn"><br>
-            Количество
+            Количество<br>
             <input type="text" name="quantity"><br>
-            <input type="submit" name="Соэдать">
+            <input type="submit" value="Создать">
         </form>
     </body>
 </html>

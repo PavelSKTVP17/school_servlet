@@ -24,10 +24,10 @@ public class WebController extends HttpServlet {
         String path=request.getServletPath();
         switch(path)
         {
-            case "showAddBook": 
+            case "/showAddBook": 
                 request.getRequestDispatcher("/showAddBook.jsp").forward(request, response);
             break;
-            case "createBook": 
+            case "/createBook": 
                 String name = request.getParameter("name");
                 String author = request.getParameter("author");
                 String isbn = request.getParameter("isbn");
@@ -37,7 +37,7 @@ public class WebController extends HttpServlet {
                 bookFacade.create(book);
                 request.getRequestDispatcher("/index.jsp").forward(request, response);
             break;
-            case "listBooks": 
+            case "/listBooks": 
                 List<Book> listBooks = bookFacade.findAll();
                 request.setAttribute("listBooks", listBooks);
                 request.getRequestDispatcher("/listBooks.jsp").forward(request, response);
