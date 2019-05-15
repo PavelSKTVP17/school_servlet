@@ -8,7 +8,13 @@
     </head>
     <body>
         <h1>Добро пожаловать</h1>
-        <a href="showAddBook">Доваить книгу</a><br>
+        <a href="showAddBook">Добавить книгу</a><br>
         <a href="listBooks">Список книг</a><br>
+        <br>
+        <a href="showAddReader">Добавить читателя</a><br>
+        <a href="listReaders">Список читателей</a><br>
+        <br>
+        <a href="showCreateHistory">Выдать книгу</a><br>
+        <a href="listHistory">Показать историю</a><br>
     </body>
 </html>

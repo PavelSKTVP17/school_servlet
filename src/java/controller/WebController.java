@@ -1,9 +1,13 @@
 
 package controller;
 
+import java.util.Date;
 import session.*;
 import entity.Book;
+import entity.History;
+import entity.Reader;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -13,10 +17,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
-@WebServlet(name = "WebController", urlPatterns = {"/","/showAddBook","/createBook","/listBooks",})
+@WebServlet(name = "WebController", urlPatterns = {
+    "/", 
+    "/showAddBook","/createBook","/listBooks",
+    "/showAddReader","/createReader","/listReaders",
+    "/showCreateHistory","/createHistory","/listHistory",})
 public class WebController extends HttpServlet {
 @EJB BookFacade bookFacade;
-
+@EJB ReaderFacade readerFacade;
+@EJB HistoryFacade historyFacade;
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
     {
         response.setContentType("text/html/charset=UTF-8");
@@ -45,8 +54,46 @@ public class WebController extends HttpServlet {
                 request.setAttribute("listBooks", listBooks);
                 request.getRequestDispatcher("/listBooks.jsp").forward(request, response);
             break;
-            default: 
-                throw new AssertionError();
+            
+            case "/showAddReader": 
+               request.getRequestDispatcher("/showAddReader.jsp").forward(request, response);
+            break;
+            case "/createReader": 
+                String firstname = request.getParameter("firstname");
+                String lastname = request.getParameter("lastname");
+                String phone = request.getParameter("phone");
+                Reader drd=new Reader(firstname, lastname, phone);
+                readerFacade.create(drd);
+                request.getRequestDispatcher("/index.jsp").forward(request, response);
+            break;
+            case "/listReaders": 
+                List<Reader> listReaders = readerFacade.findAll();
+                request.setAttribute("listReaders", listReaders);
+                request.getRequestDispatcher("/listReaders.jsp").forward(request, response);
+            break;
+            
+            case "/showCreateHistory":
+                listBooks = bookFacade.findAll();
+                request.setAttribute("listBooks", listBooks);
+                listReaders = readerFacade.findAll();
+                request.setAttribute("listReaders", listReaders);
+                request.getRequestDispatcher("/showCreateHistory.jsp").forward(request, response);
+            break;
+            case "/createHistory": 
+                String strReaderID = request.getParameter("readerId");
+                String strBookID = request.getParameter("bookId");
+                drd=readerFacade.find( Long.parseLong(strReaderID) );
+                Book bk=bookFacade.find( Long.parseLong(strBookID) );
+                History hstr=new History(drd, bk, new Date() , new Date() );
+                historyFacade.create(hstr);
+                request.getRequestDispatcher("/index.jsp").forward(request, response);
+            break;
+            case "/listHistory": 
+                List<History> listHistory = historyFacade.findAll();
+                request.setAttribute("listHistory", listHistory);
+                request.getRequestDispatcher("/listHistory.jsp").forward(request, response);
+            break;
+            default: throw new AssertionError();
         }
     }
 
