@@ -62,8 +62,8 @@ public class WebController extends HttpServlet {
                 String firstname = request.getParameter("firstname");
                 String lastname = request.getParameter("lastname");
                 String phone = request.getParameter("phone");
-                Reader drd=new Reader(firstname, lastname, phone);
-                readerFacade.create(drd);
+                Reader rdr=new Reader(firstname, lastname, phone);
+                readerFacade.create(rdr);
                 request.getRequestDispatcher("/index.jsp").forward(request, response);
             break;
             case "/listReaders": 
@@ -81,10 +81,13 @@ public class WebController extends HttpServlet {
             break;
             case "/createHistory": 
                 String strReaderID = request.getParameter("readerId");
-                String strBookID = request.getParameter("bookId");
-                drd=readerFacade.find( Long.parseLong(strReaderID) );
+                String strBookID = request.getParameter("bookId");   
+                rdr=readerFacade.find( Long.parseLong(strReaderID) );
                 Book bk=bookFacade.find( Long.parseLong(strBookID) );
-                History hstr=new History(drd, bk, new Date() , new Date() );
+                History hstr=new History(rdr, bk, new Date() , new Date() );
+                System.out.println("SERVLET CASE /createHistory");
+            //    System.out.println("Book="+bk);
+            //    System.out.println("History="+hstr);
                 historyFacade.create(hstr);
                 request.getRequestDispatcher("/index.jsp").forward(request, response);
             break;

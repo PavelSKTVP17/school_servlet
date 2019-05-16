@@ -23,7 +23,7 @@ public class History implements Serializable
     @OneToOne
     private Book book;
     @Temporal( TemporalType.TIMESTAMP)
-    private Date dateTakeBook;
+    private Date dateKateBook;
     @Temporal( TemporalType.TIMESTAMP)
     private Date dateReturnBook;
 
@@ -33,7 +33,7 @@ public class History implements Serializable
     public History(Reader reader, Book book, Date dateKateBook, Date dateReturnBook) {
         this.reader = reader;
         this.book = book;
-        this.dateTakeBook = dateKateBook;
+        this.dateKateBook = dateKateBook;
         this.dateReturnBook = dateReturnBook;
     }
 
@@ -62,11 +62,11 @@ public class History implements Serializable
     }
 
     public Date getdateTakeBook() {
-        return dateTakeBook;
+        return dateKateBook;
     }
 
     public void setdateTakeBook(Date dateKateBook) {
-        this.dateTakeBook = dateKateBook;
+        this.dateKateBook = dateKateBook;
     }
 
     public Date getDateReturnBook() {
@@ -83,7 +83,7 @@ public class History implements Serializable
         hash = 13 * hash + Objects.hashCode(this.id);
         hash = 13 * hash + Objects.hashCode(this.reader);
         hash = 13 * hash + Objects.hashCode(this.book);
-        hash = 13 * hash + Objects.hashCode(this.dateTakeBook);
+        hash = 13 * hash + Objects.hashCode(this.dateKateBook);
         hash = 13 * hash + Objects.hashCode(this.dateReturnBook);
         return hash;
     }
@@ -109,7 +109,7 @@ public class History implements Serializable
         if (!Objects.equals(this.book, other.book)) {
             return false;
         }
-        if (!Objects.equals(this.dateTakeBook, other.dateTakeBook)) {
+        if (!Objects.equals(this.dateKateBook, other.dateKateBook)) {
             return false;
         }
         if (!Objects.equals(this.dateReturnBook, other.dateReturnBook)) {
@@ -120,7 +120,7 @@ public class History implements Serializable
 
     @Override
     public String toString() {
-        return "History{" + "id=" + id + ", reader=" + reader + ", book=" + book + ", dateKateBook=" + dateTakeBook + ", dateReturnBook=" + dateReturnBook + '}';
+        return "History{" + "id=" + id + ", reader=" + reader + ", book=" + book + ", dateKateBook=" + dateKateBook + ", dateReturnBook=" + dateReturnBook + '}';
     }
     
     
