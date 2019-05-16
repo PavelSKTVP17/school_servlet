@@ -8,6 +8,7 @@ import entity.History;
 import entity.Reader;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.GregorianCalendar;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -21,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
     "/", 
     "/showAddBook","/createBook","/listBooks",
     "/showAddReader","/createReader","/listReaders",
-    "/showCreateHistory","/createHistory","/listHistory",})
+    "/showCreateHistory","/createHistory","/listHistory", "/returnBook",})
 public class WebController extends HttpServlet {
 @EJB BookFacade bookFacade;
 @EJB ReaderFacade readerFacade;
@@ -84,10 +85,9 @@ public class WebController extends HttpServlet {
                 String strBookID = request.getParameter("bookId");   
                 rdr=readerFacade.find( Long.parseLong(strReaderID) );
                 Book bk=bookFacade.find( Long.parseLong(strBookID) );
-                History hstr=new History(rdr, bk, new Date() , new Date() );
+                GregorianCalendar clndr=new GregorianCalendar();
+                History hstr=new History(rdr, bk, clndr.getTime() , clndr.getTime() );
                 System.out.println("SERVLET CASE /createHistory");
-            //    System.out.println("Book="+bk);
-            //    System.out.println("History="+hstr);
                 historyFacade.create(hstr);
                 request.getRequestDispatcher("/index.jsp").forward(request, response);
             break;
@@ -95,6 +95,13 @@ public class WebController extends HttpServlet {
                 List<History> listHistory = historyFacade.findAll();
                 request.setAttribute("listHistory", listHistory);
                 request.getRequestDispatcher("/listHistory.jsp").forward(request, response);
+            break;
+            case "/returnBook": 
+                String strHistoryID = request.getParameter("id");
+               // System.out.println("strBookID="+strBookID);
+                hstr=historyFacade.find( Long.parseLong(strHistoryID) );
+                historyFacade.remove(hstr);
+                request.getRequestDispatcher("/index.jsp").forward(request, response);
             break;
             default: throw new AssertionError();
         }
